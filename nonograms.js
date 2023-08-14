@@ -4,11 +4,11 @@ createEmptyCells();
 let isMouseDown = false;
 let isRightClickDown = false;
 
-document.addEventListener("contextmenu", (event) => {
-    event.preventDefault();
+document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    
 window.addEventListener('mousedown', function (event) {
+    event.preventDefault(); // Prevent any default actions
+
     if (event.button === 0) { // Left mouse button
         isMouseDown = true;
         isRightClickDown = false;
@@ -18,7 +18,25 @@ window.addEventListener('mousedown', function (event) {
     }
 });
 
-window.addEventListener('mouseup', function () {
+window.addEventListener('onclick', function (event) {
+    event.preventDefault(); // Prevent any default actions
+
+    if (event.button === 0) { // Left mouse button
+        isMouseDown = true;
+        isRightClickDown = false;
+    } else if (event.button === 2) { // Right mouse button
+        isMouseDown = true;
+        isRightClickDown = true;
+    }
+});
+
+window.addEventListener('contextmenu', function (event) {
+    event.preventDefault(); // Prevent the context menu from showing
+    isMouseDown = true;
+    isRightClickDown = true;
+});
+
+window.addEventListener('mouseup', function (event) {
     isMouseDown = false;
     isRightClickDown = false;
 });
@@ -48,7 +66,9 @@ function createClickableButtons(cell) {
     button.addEventListener('mousedown', function () {
         toggleButton(button);
     });
-
+    button.addEventListener('onclick', function(){
+        toggleButton(button);
+    });
     button.addEventListener('mousemove', function (event) {
         if (isMouseDown) {
             toggleButton(button);
@@ -62,23 +82,21 @@ function createClickableButtons(cell) {
 
 function toggleButton(button) {
     const cell = button.parentElement;
+
     if (isRightClickDown) {
         if (cell.classList.contains('activeButton')) {
             cell.classList.remove('activeButton');
+            console.log("removed");
         }
-    } else {
+        console.log("right click");
+    } 
+    else if (isMouseDown && !isRightClickDown ){ // Only toggle on left-click
         if (!cell.classList.contains('activeButton')) {
             cell.classList.add('activeButton');
+            console.log("added");
         }
+        console.log("left click");
     }
-    // cellClicked(cell);
-}
 
-// function cellClicked(cell) {
-//     if (cell.classList.contains("activeButton")) {
-//         console.log("undo");
-//     } else {
-//         cell.classList.add("activeButton");
-//     }
-// }
+}
 
