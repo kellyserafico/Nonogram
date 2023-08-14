@@ -40,10 +40,12 @@ function createEmptyCells() {
 
 function createClickableButtons(cell) {
     const button = document.createElement('button');
+
     button.addEventListener('mousedown', function () {
         toggleButton(button);
     });
-    button.addEventListener('mouseenter', function () {
+
+    button.addEventListener('mousemove', function (event) {
         if (isMouseDown) {
             toggleButton(button);
         }
@@ -53,27 +55,26 @@ function createClickableButtons(cell) {
     cell.classList.add("cell");
 }
 
+
 function toggleButton(button) {
     const cell = button.parentElement;
     if (isRightClickDown) {
         if (cell.classList.contains('activeButton')) {
-            button.classList.remove('active');
             cell.classList.remove('activeButton');
         }
     } else {
         if (!cell.classList.contains('activeButton')) {
-            button.classList.add('active');
             cell.classList.add('activeButton');
         }
     }
-    cellClicked(cell);
+    // cellClicked(cell);
 }
 
-function cellClicked(cell) {
-    if (!(cell.classList.contains("activeButton"))) {
-        cell.classList.add("activeButton");
-    } else {
-        console.log("undo");
-    }
-}
+// function cellClicked(cell) {
+//     if (cell.classList.contains("activeButton")) {
+//         console.log("undo");
+//     } else {
+//         cell.classList.add("activeButton");
+//     }
+// }
 
