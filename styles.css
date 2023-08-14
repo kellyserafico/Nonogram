@@ -7,12 +7,13 @@ button{
     height: 50px;
     background: transparent;
     border: 0px;
-    /* background-color: black; */
+    /* background-color: white; */
 }
 
 .cell{
     width: 50px;
     height: 50px;
+    user-select: none;
 }
 
 .activeButton{
