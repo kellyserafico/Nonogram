@@ -4,6 +4,10 @@ createEmptyCells();
 let isMouseDown = false;
 let isRightClickDown = false;
 
+document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+
+    
 window.addEventListener('mousedown', function (event) {
     if (event.button === 0) { // Left mouse button
         isMouseDown = true;
