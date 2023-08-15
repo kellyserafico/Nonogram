@@ -6,41 +6,6 @@ let isRightClickDown = false;
 
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-window.addEventListener('mousedown', function (event) {
-    event.preventDefault(); // Prevent any default actions
-
-    if (event.button === 0) { // Left mouse button
-        isMouseDown = true;
-        isRightClickDown = false;
-    } else if (event.button === 2) { // Right mouse button
-        isMouseDown = true;
-        isRightClickDown = true;
-    }
-});
-
-window.addEventListener('onclick', function (event) {
-    event.preventDefault(); // Prevent any default actions
-
-    if (event.button === 0) { // Left mouse button
-        isMouseDown = true;
-        isRightClickDown = false;
-    } else if (event.button === 2) { // Right mouse button
-        isMouseDown = true;
-        isRightClickDown = true;
-    }
-});
-
-window.addEventListener('contextmenu', function (event) {
-    event.preventDefault(); // Prevent the context menu from showing
-    isMouseDown = true;
-    isRightClickDown = true;
-});
-
-window.addEventListener('mouseup', function (event) {
-    isMouseDown = false;
-    isRightClickDown = false;
-});
-
 function createEmptyCells() {
     for (let i = 0; i < 11; i++) {
         let tr = table.appendChild(document.createElement('tr')); // row
@@ -63,16 +28,44 @@ function createEmptyCells() {
 function createClickableButtons(cell) {
     const button = document.createElement('button');
 
-    button.addEventListener('mousedown', function () {
+    button.addEventListener('mousedown', function (event) {
+        if (event.button === 0) { // Left mouse button
+            isMouseDown = true;
+            isRightClickDown = false;
+        } 
+        else if(event.button === 2){
+            isMouseDown = true;
+            isRightClickDown = true;
+        }
+        toggleButton(button);
+        
+    });
+    button.addEventListener('click', function(){
         toggleButton(button);
     });
-    button.addEventListener('onclick', function(){
-        toggleButton(button);
-    });
-    button.addEventListener('mousemove', function (event) {
+    button.addEventListener('mousemove', function () {
         if (isMouseDown) {
             toggleButton(button);
         }
+        
+    });
+
+    table.addEventListener('mouseup', function(event) {
+        isRightClickDown = false;
+        isMouseDown = false;
+        // toggleButton(button)
+        console.log('up')
+    });
+
+    button.addEventListener('contextmenu', function (){
+        cell = button.parentElement;
+
+        if(cell.classList.contains('activeButton')){
+            cell.classList.remove('activeButton');
+        }
+        isMouseDown = false;
+        isRightClickDown = false;
+        console.log("hai");
     });
 
     cell.appendChild(button);
@@ -83,19 +76,17 @@ function createClickableButtons(cell) {
 function toggleButton(button) {
     const cell = button.parentElement;
 
-    if (isRightClickDown) {
+    if (isRightClickDown && isMouseDown) {
         if (cell.classList.contains('activeButton')) {
             cell.classList.remove('activeButton');
             console.log("removed");
         }
-        console.log("right click");
     } 
     else if (isMouseDown && !isRightClickDown ){ // Only toggle on left-click
-        if (!cell.classList.contains('activeButton')) {
-            cell.classList.add('activeButton');
-            console.log("added");
-        }
-        console.log("left click");
+
+        cell.classList.add('activeButton');
+        console.log("added");
+
     }
 
 }
