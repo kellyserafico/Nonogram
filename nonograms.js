@@ -1,10 +1,21 @@
 var table = document.getElementById("canvasBoard");
 createEmptyCells();
-
 let isMouseDown = false;
 let isRightClickDown = false;
 
-document.addEventListener('contextmenu', (e) => e.preventDefault());
+// document.addEventListener('contextmenu', (e) => e.preventDefault());
+const solution = [
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
 
 function createEmptyCells() {
     for (let i = 0; i < 11; i++) {
@@ -54,7 +65,8 @@ function createClickableButtons(cell) {
         isRightClickDown = false;
         isMouseDown = false;
         // toggleButton(button)
-        console.log('up')
+        // console.log('up')
+        
     });
 
     button.addEventListener('contextmenu', function (){
@@ -65,7 +77,7 @@ function createClickableButtons(cell) {
         }
         isMouseDown = false;
         isRightClickDown = false;
-        console.log("hai");
+        // console.log("hai");
     });
 
     cell.appendChild(button);
@@ -79,15 +91,48 @@ function toggleButton(button) {
     if (isRightClickDown && isMouseDown) {
         if (cell.classList.contains('activeButton')) {
             cell.classList.remove('activeButton');
-            console.log("removed");
+            // console.log("removed");
         }
     } 
     else if (isMouseDown && !isRightClickDown ){ // Only toggle on left-click
 
         cell.classList.add('activeButton');
-        console.log("added");
+        // console.log("added");
 
     }
-
+    checkSolution();
 }
 
+
+// checkSolution();
+  
+  console.log(solution)
+
+function checkSolution(){
+    let buttons = document.querySelectorAll('.cell button');
+    let isSolutionCorrect = true;
+
+    buttons.forEach((button, index) => {
+        const row = Math.floor(index / 10);
+        const col = index % 10;
+
+        button.addEventListener('click', () => {
+            console.log(`Button clicked at Row: ${row}, Column: ${col}`);
+        });
+
+        const canvasValue = button.classList.contains('activeButton') ? 1 : 0;
+        const solutionValue = solution[row][col];
+
+        console.log(`Canvas Value: ${canvasValue}, Solution Value: ${solutionValue}`);
+
+
+        if (canvasValue !== solutionValue) {
+            isSolutionCorrect = false;
+            
+        }
+
+    });
+    if (isSolutionCorrect) {
+        alert("Congratulations! You solved the puzzle.");
+    }
+}

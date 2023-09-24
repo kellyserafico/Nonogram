@@ -5,9 +5,10 @@ table, td{
 button{
     width: 60px;
     height: 60px;
-    background: green;
+    /* background: green; */
     border: 0px;
-    /* background-color: white; */
+    background-color: transparent;
+    /* color: transparent; */
 }
 
 .cell{
@@ -18,4 +19,5 @@ button{
 
 .activeButton{
     background-color: black;
+    /* color: black; */
 }
