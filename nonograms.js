@@ -2,8 +2,7 @@ var table = document.getElementById("canvasBoard");
 createEmptyCells();
 let isMouseDown = false;
 let isRightClickDown = false;
-
-// document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('contextmenu', (e) => e.preventDefault());
 const solution = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -89,18 +88,27 @@ function toggleButton(button) {
     const cell = button.parentElement;
 
     if (isRightClickDown && isMouseDown) {
-        if (cell.classList.contains('activeButton')) {
+        if (cell.classList.contains('activeButton')) {  //if right clicking on activeButton
             cell.classList.remove('activeButton');
             // console.log("removed");
         }
+        else if(!(cell.classList.contains('activeButton'))){ // if right clicking on a blank button, will add xButton class (make red)
+            if(cell.classList.contains('xButton')){
+                cell.classList.remove('xButton')
+            }
+            else if(!(cell.classList.contains('xButton'))){
+                cell.classList.add('xButton')
+            }
+        }
     } 
     else if (isMouseDown && !isRightClickDown ){ // Only toggle on left-click
-
+        if(cell.classList.contains('xButton')){
+            cell.classList.remove('xButton')
+        }
         cell.classList.add('activeButton');
         // console.log("added");
 
     }
-    checkSolution();
 }
 
 
