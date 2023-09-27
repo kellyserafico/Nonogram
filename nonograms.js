@@ -1,6 +1,6 @@
 const solution = [
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -10,6 +10,9 @@ const solution = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
+//   console.log(solution[0][0]);
+columnHeaders(solution);
+console.log(solution)
 let wrongCounter = 100;
 var table = document.getElementById("canvasBoard");
 createEmptyCells();
@@ -129,35 +132,27 @@ function toggleButton(button) {
         document.getElementById('text').innerHTML = "no : ("
     }
 }
-
-
-// checkSolution();
   
-  console.log(solution)
+function columnHeaders(solution){
+    // console.log(solution[0][0])
+    var header = [];
+    var individualHeader = [];
+    for(let i = 0; i < 10; i++){
+        var count = 0;
+        for(let j = 0; j < 10; j++){
+            if(solution[i][j] == 1){
+                count++
+            }
+            else{ 
+                individualHeader.push(count);
+                count = 0;
+            }
+            individualHeader.push(count);
+            count = 0;
 
-// function checkSolution(){
-//     let buttons = document.querySelectorAll('.cell button');
-//     let isSolutionCorrect = true;
-
-//     buttons.forEach((button, index) => {
-//         const row = Math.floor(index / 10);
-//         const col = index % 10;
-
-//         button.addEventListener('click', () => {
-//             console.log(`Button clicked at Row: ${row}, Column: ${col}`);
-//         });
-
-//         const canvasValue = button.classList.contains('activeButton') ? 1 : 0;
-//         const solutionValue = solution[row][col];
-
-//         console.log(`Canvas Value: ${canvasValue}, Solution Value: ${solutionValue}`);
-
-
-//         if (canvasValue !== solutionValue) {
-//             isSolutionCorrect = false;
-            
-//         }
-
-//     });
-    
-// }
+        }
+        header.push(individualHeader);
+        individualHeader = [];
+    }
+    console.log(header)
+}
