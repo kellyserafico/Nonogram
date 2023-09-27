@@ -1,7 +1,7 @@
 const solution = [
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
+    [0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -10,8 +10,7 @@ const solution = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
-//   console.log(solution[0][0]);
-columnHeaders(solution);
+
 console.log(solution)
 let wrongCounter = 100;
 var table = document.getElementById("canvasBoard");
@@ -30,7 +29,14 @@ function createEmptyCells() {
             if ((i == 0) && (j == 0)) {
                 cell.innerHTML = " ";
             } else if ((i == 0) || (j == 0)) { // creates headers
-                cell.innerHTML = ": 3";
+                if(i == 0){
+                    cell.innerHTML = rowHeaders(solution)[j - 1];
+                }
+                if(j == 0){
+                    cell.innerHTML = columnHeaders(solution)[i - 1];
+                    
+                }
+                
                 cell.classList.add("nums");
             } else {
                 createClickableButtons(cell, solution[i-1][j-1]);
@@ -124,7 +130,7 @@ function toggleButton(button) {
         // console.log("added");
 
     }
-    console.log(wrongCounter);
+    // console.log(wrongCounter);
     if (wrongCounter == 0){
         document.getElementById('text').innerHTML = "yay"
     }
@@ -133,6 +139,8 @@ function toggleButton(button) {
     }
 }
   
+
+
 function columnHeaders(solution){
     // console.log(solution[0][0])
     var header = [];
@@ -142,17 +150,58 @@ function columnHeaders(solution){
         for(let j = 0; j < 10; j++){
             if(solution[i][j] == 1){
                 count++
+                if(j == 9){
+                    individualHeader.push(count)
+                }
             }
-            else{ 
-                individualHeader.push(count);
+            else if(solution[i][j] == 0){
+                if(j > 0){
+                    if(solution[i][j - 1] != 0){
+                        individualHeader.push(count)
+                    }
+                }
+                
                 count = 0;
             }
-            individualHeader.push(count);
-            count = 0;
+        }
+        header.push(individualHeader);
+        individualHeader = [];
+    }
+    // console.log(header)
+    return header;
+}
 
+function rowHeaders(solution){
+    
+    var header = [];
+    var individualHeader = [];
+    for(let i = 0; i < 10; i++){
+        var count = 0;
+        for(let j = 0; j < 10; j++){
+            if(solution[j][i] == 1){
+                count++
+                if(j == 9){
+                    individualHeader.push(count)
+                }
+            }
+            else if(solution[j][i] == 0){
+                if(j > 0){
+                    if(solution[j - 1][i] != 0){
+                        individualHeader.push(count)
+                    }
+                }
+                
+                count = 0;
+            }
         }
         header.push(individualHeader);
         individualHeader = [];
     }
     console.log(header)
+    return header;
+}
+
+function createSolution(){
+    solution = [];
+    
 }
