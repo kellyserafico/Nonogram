@@ -1,15 +1,4 @@
-const solution = [
-    [1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-    [0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
-    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  ];
+const solution = createSolution();
 
 console.log(solution)
 let wrongCounter = 100;
@@ -17,7 +6,7 @@ var table = document.getElementById("canvasBoard");
 createEmptyCells();
 let isMouseDown = false;
 let isRightClickDown = false;
-// document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('contextmenu', (e) => e.preventDefault());
 
 function createEmptyCells() {
     for (let i = 0; i < 11; i++) {
@@ -197,11 +186,17 @@ function rowHeaders(solution){
         header.push(individualHeader);
         individualHeader = [];
     }
-    console.log(header)
+    // console.log(header)
     return header;
 }
-
 function createSolution(){
-    solution = [];
-    
+    let solution = [];
+    for(let i = 0; i < 10; i++){
+        let rowSolution = [];
+        for(let j = 0; j < 10; j++){
+            rowSolution.push(Math.floor(Math.random() * 2))
+        }
+        solution.push(rowSolution);
+    }
+    return solution;
 }
