@@ -2,6 +2,7 @@ const solution = createSolution();
 
 console.log(solution)
 let wrongCounter = 100;
+let rowCounter = [];
 var table = document.getElementById("canvasBoard");
 createEmptyCells();
 let isMouseDown = false;
@@ -39,6 +40,7 @@ function createClickableButtons(cell, correctValue) {
     button.value = correctValue;
     if (correctValue == 0){
         wrongCounter -= 1;
+        //help me !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     
     button.addEventListener('mousedown', function (event) {
