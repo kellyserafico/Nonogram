@@ -7,6 +7,7 @@ var table = document.getElementById("canvasBoard");
 createEmptyCells();
 let isMouseDown = false;
 let isRightClickDown = false;
+let xButtonRemoveMode = false;
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 
 function createEmptyCells() {
@@ -40,28 +41,60 @@ function createClickableButtons(cell, correctValue) {
     button.value = correctValue;
     if (correctValue == 0){
         wrongCounter -= 1;
-        //help me !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     
     button.addEventListener('mousedown', function (event) {
-        if (event.button === 0) { // Left mouse button
+        if((isMouseDown) && (isRightClickDown) && (cell.classList.contains('xButton'))){
+            xButtonRemoveMode = true;
+            deletexButton(cell);
+        }
+        else if (event.button === 0) { // Left mouse button
             isMouseDown = true;
             isRightClickDown = false;
+            toggleButton(button);
         } 
-        else if(event.button === 2){
+        else if(xButtonRemoveMode == false && (!(cell.classList.contains('activeButton'))) && (event.button === 2) && (!(cell.classList.contains('xButton')))){ // help
+            cell.classList.add('xButton')
+            xButtonRemoveMode = false;
+            isRightClickDown = true;
+            isMouseDown = true;
+        }
+        else if(event.button === 2){ // right mouse button
             isMouseDown = true;
             isRightClickDown = true;
+            toggleButton(button);
         }
-        toggleButton(button);
         
     });
     button.addEventListener('click', function(){
-        toggleButton(button);
-    });
-    button.addEventListener('mousemove', function () {
-        if (isMouseDown) {
+        if(isMouseDown && (isRightClickDown) && !(button.parentElement.classList.contains('activeButton'))){
+            cell.classList.add('xButton');
+            // console.log('2')
+        }
+        else{
             toggleButton(button);
         }
+
+
+    });
+
+    button.addEventListener('mousemove', function () {
+        
+            if((isMouseDown) && (isRightClickDown) && (cell.classList.contains('xButton'))){
+                xButtonRemoveMode = true
+                deletexButton(cell);
+                console.log("nope")
+                
+            }
+            else if(xButtonRemoveMode == false && (isMouseDown) && (isRightClickDown) && (!(cell.classList.contains('activeButton')))){
+                cell.classList.add('xButton');
+                // console.log('3');
+            }
+            else if(isMouseDown){
+                toggleButton(button);
+            }
+        
+        
         
     });
 
@@ -69,7 +102,8 @@ function createClickableButtons(cell, correctValue) {
         isRightClickDown = false;
         isMouseDown = false;
         // toggleButton(button)
-        // console.log('up')
+        console.log('up')
+        xButtonRemoveMode = false;
         
     });
 
@@ -88,6 +122,9 @@ function createClickableButtons(cell, correctValue) {
     cell.classList.add("cell");
 }
 
+function deletexButton(cell){ ///////////////////////////////////////////////////////////////////////////////////////
+    cell.classList.remove('xButton')
+}
 
 function toggleButton(button) {
     const cell = button.parentElement;
@@ -102,14 +139,11 @@ function toggleButton(button) {
                 wrongCounter += 1;
             }
         }
-        else if(!(cell.classList.contains('activeButton'))){ // if right clicking on a blank button, will add xButton class (make red)
-            // cell.classList.add('xButton')
+        else if((cell.classList.contains('xButton'))){ 
+            cell.classList.remove('xButton')
         }
     } 
     else if (isMouseDown && !isRightClickDown ){ // Only toggle on left-click
-        if(cell.classList.contains('xButton')){
-            cell.classList.remove('xButton')
-        }
         if (!cell.classList.contains('activeButton')){
             cell.classList.add('activeButton');
             if (button.value == 1){
@@ -129,7 +163,7 @@ function toggleButton(button) {
         document.getElementById('text').innerHTML = "no : ("
     }
 }
-  
+
 
 
 function columnHeaders(solution){
