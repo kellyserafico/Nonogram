@@ -80,16 +80,8 @@ class Board{
     
         button.addEventListener('mousedown', function(event){
             if(event.button === 0){ // Left Mouse Button
-                // if(!button.parentElement.classList.contains('activeButton')){
-                //     button.parentElement.classList.add('activeButton');
-                //     if(button.value ==1){
-                //         wrongCounter--;
-                //     }
-                //     else{
-                //         wrongCounter++;
-                //     }
-                    socket.emit('makeActive');
 
+                    socket.emit('makeActive');
                     socket.on('makeActive', () => {
                         
                         if(!button.parentElement.classList.contains('activeButton')){
@@ -97,7 +89,7 @@ class Board{
                         }
                         
                     });
-                // }
+
                 if(button.parentElement.classList.contains('xButton')){
                     button.parentElement.classList.remove('xButton');
                 }
@@ -198,8 +190,16 @@ class Board{
 
     
 }
-b1 = new Board() 
-b2 = new Board()
+
+socket.emit('makeCanvas');
+
+socket.on('makeCanvas', () => {
+    
+    b1 = new Board(); 
+    b2 = new Board();
+    
+});
+
 
 
 

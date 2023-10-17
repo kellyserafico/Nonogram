@@ -30,12 +30,15 @@
 // console.log("http://localhost:5000")
 
 //Setup stuff idrk
+
 const express = require('express');
 const app = express();
 const http = require('http');
+const path = require('path');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const publicPath    = path.join(__dirname, '/../public');
 // var socket = io();
 app.use('/static', express.static(__dirname + '/static'));
 
@@ -46,6 +49,7 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', (socket) => {
+  
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('A user has disconnected.');
@@ -57,9 +61,12 @@ io.on('connection', (socket) => {
   socket.on('makeActive', () => {
   io.sockets.emit('makeActive');
 })
-  // socket.on('peepee2', (msg) => {
-  //   console.log(msg);
-  // });
+
+  socket.on('makeCanvas', () =>{
+    io.sockets.emit('makeCanvas');
+  })
+
+
 });
 
 
