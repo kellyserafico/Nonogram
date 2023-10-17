@@ -3,7 +3,7 @@ console.log(solution);
 
 let wrongCounter = 100;
 let rowCounter = [];
-let table = document.getElementById("canvasBoard");
+let table = document.getElementById("canvasBoard2");
 createEmptyCells();
 table.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -90,10 +90,10 @@ function createClickableButtons(cell, correctValue){
         }
 
         if (wrongCounter == 0){
-            document.getElementById('text').innerHTML = "yay"
+            document.getElementById('text2').innerHTML = "yay"
         }
         else{
-            document.getElementById('text').innerHTML = "no : ("
+            document.getElementById('text2').innerHTML = "no : ("
         }
         
     });
