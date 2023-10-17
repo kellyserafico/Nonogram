@@ -5,6 +5,8 @@
 // });
 
 
+
+var socket = io();
 //create solution 
 const solution = createSolution();
 console.log(solution)
@@ -78,16 +80,25 @@ class Board{
     
         button.addEventListener('mousedown', function(event){
             if(event.button === 0){ // Left Mouse Button
-                if(!button.parentElement.classList.contains('activeButton')){
-                    button.parentElement.classList.add('activeButton');
-                    if(button.value ==1){
-                        wrongCounter--;
-                    }
-                    else{
-                        wrongCounter++;
-                    }
-                }
-                else if(button.parentElement.classList.contains('xButton')){
+                // if(!button.parentElement.classList.contains('activeButton')){
+                //     button.parentElement.classList.add('activeButton');
+                //     if(button.value ==1){
+                //         wrongCounter--;
+                //     }
+                //     else{
+                //         wrongCounter++;
+                //     }
+                    socket.emit('makeActive');
+
+                    socket.on('makeActive', () => {
+                        
+                        if(!button.parentElement.classList.contains('activeButton')){
+                            button.parentElement.classList.add('activeButton');
+                        }
+                        
+                    });
+                // }
+                if(button.parentElement.classList.contains('xButton')){
                     button.parentElement.classList.remove('xButton');
                 }
             }

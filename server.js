@@ -36,6 +36,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+// var socket = io();
 app.use('/static', express.static(__dirname + '/static'));
 
 //send html to browser
@@ -46,19 +47,30 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
-
+  socket.on('disconnect', () => {
+    console.log('A user has disconnected.');
+})
   socket.on('peepee', (msg) => {
     console.log(msg);
   });
 
+  socket.on('makeActive', () => {
+  io.sockets.emit('makeActive');
+})
   // socket.on('peepee2', (msg) => {
   //   console.log(msg);
   // });
 });
 
 
-
 //start the server with websocket too
 server.listen(3000, () => {
   console.log('listening on *:3000');
+  
 });
+
+
+
+// socket.on('makeActive', () => {
+//   io.sockets.emit('makeActive');
+// })
