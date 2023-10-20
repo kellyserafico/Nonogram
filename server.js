@@ -58,13 +58,13 @@ io.on('connection', (socket) => {
     console.log(msg);
   });
 
-  socket.on('makeActive', () => {
+  socket.on('makeActive', (button) => {
   io.sockets.emit('makeActive');
-})
+});
 
   socket.on('makeCanvas', () =>{
     io.sockets.emit('makeCanvas');
-  })
+  });
 
 
 });
