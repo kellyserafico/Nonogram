@@ -65,7 +65,7 @@ class Board{
                     
                     cell.classList.add("nums");
                 } else {
-                    this.createClickableButtons(cell, solution[i-1][j-1]);
+                    this.createClickableButtons(cell, solution[i-1][j-1]); //let newButton = this... newButton add id = i, j
                 }
             }
         }
