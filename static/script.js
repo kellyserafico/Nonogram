@@ -79,16 +79,18 @@ class Board{
         }
     
         button.addEventListener('mousedown', function(event){
-            if(event.button === 0){ // Left Mouse Button
-
-                    socket.emit('makeActive', button);
-                    socket.on('makeActive', () => {
-                        
-                        if(!button.parentElement.classList.contains('activeButton')){
+            if(event.button === 0){ // Left Mouse Button                ////////////////////////////////////////////////////////////////////   
+                if(!button.parentElement.classList.contains('activeButton')){
+                    socket.emit('makeActive');
+                    console.log(button);                    
+                        socket.on('makeActive', () =>{
+                            console.log(button);                     
                             button.parentElement.classList.add('activeButton');
-                        }
-                        
-                    });
+
+                        });
+                    
+                }
+
 
                 if(button.parentElement.classList.contains('xButton')){
                     button.parentElement.classList.remove('xButton');
@@ -191,13 +193,17 @@ class Board{
     
 }
 
-socket.emit('makeCanvas');
 
-socket.on('makeCanvas', () => {
-    
-    b1 = new Board(); 
-    // b2 = new Board();
-    
+b1 = new Board();
+
+// socket.emit('makeCanvas');
+
+// socket.on('makeCanvas', () => {
+//     b1 = new Board(); 
+// });
+
+socket.emit("connectionText");
+socket.on("connectionText", () =>{
+    text = document.createElement("h1");
+    text.innerHTML = "User has connected";
 });
-
-

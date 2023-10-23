@@ -50,22 +50,28 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   
+  socket.on("connectionText", () =>{
+    io.emit("connectionText");
+  })
+  
+
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('A user has disconnected.');
 })
-  socket.on('peepee', (msg) => {
-    console.log(msg);
-  });
+  // socket.on('peepee', (msg) => {
+  //   console.log(msg);
+  // });
 
-  socket.on('makeActive', (button) => {
-  io.sockets.emit('makeActive');
+  socket.on('makeCanvas', ()=>{
+    io.emit('makeCanvas',);
+  })
+
+  socket.on('makeActive', () =>{
+
+    io.emit('makeActive');
+    
 });
-
-  socket.on('makeCanvas', () =>{
-    io.sockets.emit('makeCanvas');
-  });
-
 
 });
 
