@@ -6,7 +6,13 @@
 
 
 
-var socket = io();
+
+// Add the following code to include the Socket.IO library
+// const script = document.createElement('script');
+// script.src = '/socket.io/socket.io.js';
+// document.head.appendChild(script);
+
+// var socket = io();
 //create solution 
 const solution = createSolution();
 console.log(solution)
@@ -193,17 +199,4 @@ class Board{
     
 }
 
-
-b1 = new Board();
-
-// socket.emit('makeCanvas');
-
-// socket.on('makeCanvas', () => {
-//     b1 = new Board(); 
-// });
-
-socket.emit("connectionText");
-socket.on("connectionText", () =>{
-    text = document.createElement("h1");
-    text.innerHTML = "User has connected";
-});
+b1 = new Board;
