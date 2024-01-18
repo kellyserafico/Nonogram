@@ -87,14 +87,10 @@ class Board{
         button.addEventListener('mousedown', function(event){
             if(event.button === 0){ // Left Mouse Button                ////////////////////////////////////////////////////////////////////   
                 if(!button.parentElement.classList.contains('activeButton')){
-                    socket.emit('makeActive');
-                    console.log(button);                    
-                        socket.on('makeActive', () =>{
-                            console.log(button);                     
-                            button.parentElement.classList.add('activeButton');
 
-                        });
-                    
+                    // console.log(button);                                 
+                    button.parentElement.classList.add('activeButton');
+
                 }
 
 
@@ -200,4 +196,5 @@ class Board{
 }
 
 b1 = new Board;
-socket.emit('myCustomEvent', { data: 'Hello, server!' });
+
+socket.emit('createBoard', b1);
