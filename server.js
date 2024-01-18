@@ -22,6 +22,13 @@ app.get('/', function(request, response) {
 // New connection
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.on('myCustomEvent', (data) => {
+    console.log("Received data from client: ", data);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('a user disconnected');
+  });
 });
 
 

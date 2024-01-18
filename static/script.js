@@ -12,7 +12,7 @@
 // script.src = '/socket.io/socket.io.js';
 // document.head.appendChild(script);
 
-// var socket = io();
+var socket = io();
 //create solution 
 const solution = createSolution();
 console.log(solution)
@@ -200,3 +200,4 @@ class Board{
 }
 
 b1 = new Board;
+socket.emit('myCustomEvent', { data: 'Hello, server!' });
